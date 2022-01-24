@@ -50,7 +50,7 @@ void* genResponse(void* input) {
 
 	gettimeofday(&start, NULL); // setting the start time to the current time of day with no input for time zone
 
-	cout << "Time right as starting read: " << start << endl;
+	cout << "Time right as starting read: " << start.tv_usec << endl;
 
 	// code from spec sheet
 	// reads in data from the client into the buffer iteration times (same iteration number as client side)
@@ -62,7 +62,7 @@ void* genResponse(void* input) {
 	// once we are done reading, store the new time of day in the end time
 	gettimeofday(&end, NULL);
 
-	cout << "time once we are done reading: " << end << endl;
+	cout << "time once we are done reading: " << end.tv_usec << endl;
 	cout << "number of reads: " << count << endl;
 
 	// send acknowledgement (response) back to client
