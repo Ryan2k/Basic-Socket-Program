@@ -163,7 +163,11 @@ int main(int argc, char** argv) {
 	// get the linked list of addrinfo that the connection() can understand
 	struct addrinfo* addressGuesses = getAddressGuesses(serverPort, serverName);
 
+    cout << "guess 1: " << addressGuesses->ai_addr << endl;
+
     int sd = getSocketDescriptor(addressGuesses);
+
+    cout << "socket descriptor: " << sd;
 
     // if the socket descriptor is -1, we couldnt find a successful connection so just kill the program
     if (sd == -1) {
@@ -183,13 +187,16 @@ int main(int argc, char** argv) {
     // 2. start the starttime with the current time of day (i believe this is just linux time)
     gettimeofday(&start, NULL); // sets start tot he current time of day. Second parameter is timezone
 
+    cout << "start time: " << start << endl;
 
     // 3. Call the function to write to socket
     // if we have found a successful connection, write the data to the socket
     writeToSocket(iterations, nbufs, bufsize, type, sd);
 
     // 4. When it is done writing, set the value of lap to the current time of day
-    gettimeofday(&start, NULL);
+    gettimeofday(&lap, NULL);
+
+    cout << "time done writing data: " << lap << endl;
 
     // 5. Now read back the information from the server (takes some time)
     int numReads = 0;
@@ -197,6 +204,8 @@ int main(int argc, char** argv) {
 
     // 6. Now check the time after reading (store as end)
     gettimeofday(&end, NULL);
+
+    cout << "time done reading data back from server: " << endl;
 
     // 7. Calculate the transfer time (lap - start) & the total time (end - start)
     transferTime = ((lap.tv_sec - start.tv_sec) * 1000000L) + (lap.tv_usec - start.tv_usec);
