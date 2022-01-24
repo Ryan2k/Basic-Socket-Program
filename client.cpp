@@ -169,7 +169,7 @@ int getSocketDescriptor (struct addrinfo* head) {
  * write we are doing (described over each if statement)
  */
 void writeToSocket (int iterations, int nbufs, int bufsize, int type, int socketDescriptor) {
-    cout << "entered writeToSocket" << endl;
+    //cout << "entered writeToSocket" << endl;
     // allocate a data buffer to send to the server
 	// data buffers are temporary storage to transfer between different media and storage
 	// basically a array of strings (array of array of characters) with each string sized (bufsize - in bytes)
@@ -181,7 +181,7 @@ void writeToSocket (int iterations, int nbufs, int bufsize, int type, int socket
 
 	// the assignment says to call the write iteration times in all cases so does this in a loop iteration times
 	for (int i = 0; i < iterations; i++) {
-        cout << "write iteration: " << i << endl;
+        //cout << "write iteration: " << i << endl;
 		if(type == 1) {
 			// if type is 1, we do multiple writes so send each string individually
 			for(int j = 0; j < nbufs; j++){
@@ -205,11 +205,11 @@ void writeToSocket (int iterations, int nbufs, int bufsize, int type, int socket
 		}
 	}
 
-    cout << "finished writing!" << endl;
+    //cout << "finished writing!" << endl;
 }
 
 int main(int argc, char** argv) {
-    cout << "opened program" << endl;
+    //cout << "opened program" << endl;
     char* serverPort = argv[1]; // first argument is the port to the server
 	char* serverName = argv[2]; // servers IP address or host name
 	int iterations = atoi(argv[3]); // number of iterations a client performs on data transmission using one of the three methods
@@ -226,11 +226,11 @@ int main(int argc, char** argv) {
 	// get the linked list of addrinfo that the connection() can understand
 	struct addrinfo* addressGuesses = getAddressGuesses(serverPort, serverName);
 
-    cout << "guess 1: " << addressGuesses->ai_addr << endl;
+    //cout << "guess 1: " << addressGuesses->ai_addr << endl;
 
     int sd = getSocketDescriptor(addressGuesses);
 
-    cout << "successfully grabbed socket descriptor witha  value: " << sd << endl;
+    //cout << "successfully grabbed socket descriptor witha  value: " << sd << endl;
 
     // if the socket descriptor is -1, we couldnt find a successful connection so just kill the program
     if (sd == -1) {
@@ -250,7 +250,7 @@ int main(int argc, char** argv) {
     // 2. start the starttime with the current time of day (i believe this is just linux time)
     gettimeofday(&start, NULL); // sets start tot he current time of day. Second parameter is timezone
 
-    cout << "start time: " << start.tv_usec << endl;
+    //cout << "start time: " << start.tv_usec << endl;
 
     // 3. Call the function to write to socket
     // if we have found a successful connection, write the data to the socket
@@ -259,7 +259,7 @@ int main(int argc, char** argv) {
     // 4. When it is done writing, set the value of lap to the current time of day
     gettimeofday(&lap, NULL);
 
-    cout << "time done writing data: " << lap.tv_usec << endl;
+    //cout << "time done writing data: " << lap.tv_usec << endl;
 
     // 5. Now read back the information from the server (takes some time)
     int numReads = 0;
@@ -268,7 +268,7 @@ int main(int argc, char** argv) {
     // 6. Now check the time after reading (store as end)
     gettimeofday(&end, NULL);
 
-    cout << "time done reading data back from server: " << end.tv_sec << endl;
+    //cout << "time done reading data back from server: " << end.tv_sec << endl;
 
     // 7. Calculate the transfer time (lap - start) & the total time (end - start)
     transferTime = ((lap.tv_sec - start.tv_sec) * 1000000L) + (lap.tv_usec - start.tv_usec);
