@@ -33,6 +33,7 @@ using namespace std;
  * linked list of addrinfo structures.
  */
 struct addrinfo* getAddressGuesses (char* portNumber, char* ipAddress) {
+    cout << "entered getAddressGuesses!" << endl;
     // give the following hints of the server
     struct addrinfo hints;
     memset(&hints, 0, sizeof(hints));
@@ -87,7 +88,9 @@ int getSocketDescriptor (struct addrinfo* head) {
 
         // if sd is -1, it means it cant connect so try next guess
         if (sd == -1) {
+            cout << "couldnt connect" << endl;
             curr = curr->ai_next;
+            cout << "next guess: " << curr->ai_addr << endl;
         } // step 2 - check to see if you can actually connect
         else {
             // if it didnt return -1, it returned 1 meaning success, so check to see if it can actually connect
@@ -103,7 +106,9 @@ int getSocketDescriptor (struct addrinfo* head) {
                 debuggingSuccess = true;
             }
 
-            cout << "guess " << guessCount << " successful connection: " << debuggingSuccess << endl;
+            int actualCount = guessCount - 1;
+
+            cout << "guess " << actualCount << " successful connection: " << debuggingSuccess << endl;
 
             // if this is not -1, it means it failed and we should move on
             if (successfulConnection != -1) {
@@ -130,6 +135,7 @@ int getSocketDescriptor (struct addrinfo* head) {
  * write we are doing (described over each if statement)
  */
 void writeToSocket (int iterations, int nbufs, int bufsize, int type, int socketDescriptor) {
+    cout << "entered writeToSocket" << endl;
     // allocate a data buffer to send to the server
 	// data buffers are temporary storage to transfer between different media and storage
 	// basically a array of strings (array of array of characters) with each string sized (bufsize - in bytes)
@@ -141,6 +147,7 @@ void writeToSocket (int iterations, int nbufs, int bufsize, int type, int socket
 
 	// the assignment says to call the write iteration times in all cases so does this in a loop iteration times
 	for (int i = 0; i < iterations; i++) {
+        cout << "write iteration: " << i << endl;
 		if(type == 1) {
 			// if type is 1, we do multiple writes so send each string individually
 			for(int j = 0; j < nbufs; j++){
@@ -163,6 +170,8 @@ void writeToSocket (int iterations, int nbufs, int bufsize, int type, int socket
             write (socketDescriptor, vector, bufsize);
 		}
 	}
+
+    cout << "finished writing!" << endl;
 }
 
 int main(int argc, char** argv) {
@@ -187,7 +196,7 @@ int main(int argc, char** argv) {
 
     int sd = getSocketDescriptor(addressGuesses);
 
-    cout << "socket descriptor: " << sd;
+    cout << "successfully grabbed socket descriptor witha  value: " << sd << endl;
 
     // if the socket descriptor is -1, we couldnt find a successful connection so just kill the program
     if (sd == -1) {
