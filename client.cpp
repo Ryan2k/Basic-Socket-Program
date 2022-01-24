@@ -66,7 +66,7 @@ struct addrinfo* getAddressGuesses (char* portNumber, char* ipAddress) {
  */
 int getSocketDescriptor (struct addrinfo* head) {
     cout << "entered getSocketDescriptor" << endl;
-    // struct addrinfo* curr = head;
+    struct addrinfo* curr; // the current record in the linked list (will initilize to head)
 
     int sd = -1; // the return value
 
