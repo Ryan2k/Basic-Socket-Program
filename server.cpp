@@ -36,6 +36,7 @@ struct communicationThreadData {
  * to read all of the data.
  */
 void* genResponse(void* input) {
+	cout << "Entered genResponse()!" << endl;
 	int comThread = ((struct communicationThreadData*)input)->socketDescriptor; // socket descriptor of the current communication thread
 	int iterations = ((struct communicationThreadData*)input)->numIterations; // number of iterations
 	struct timeval start; // time we start reading
@@ -49,20 +50,28 @@ void* genResponse(void* input) {
 
 	gettimeofday(&start, NULL); // setting the start time to the current time of day with no input for time zone
 
+	cout << "Time right as starting read: " << start << endl;
+
 	// code from spec sheet
 	// reads in data from the client into the buffer iteration times (same iteration number as client side)
 	for (int i = 0; i < iterations; i++) {
+		cout << "Read Iteration: " << i << endl;
 		for (int nRead = 0; nRead += read(comThread, databuf, BUFSIZE - nRead) < BUFSIZE; count++);
 	}
 
 	// once we are done reading, store the new time of day in the end time
 	gettimeofday(&end, NULL);
 
+	cout << "time once we are done reading: " << end << endl;
+	cout << "number of reads: " << count << endl;
+
 	// send acknowledgement (response) back to client
 	// this is the value kept in count (the number of reads we performed on the buffer)
 	// this is done via the write system call which takes in a file descriptor, the data, and the size of the data
 	// in this case, the file descriptor points to a communication link (the socket) which in linux is a file (everything is a file)
 	write(comThread, &count, sizeof(count));
+
+	cout << "succesfully wrote response!" << endl;
 
 	// print out the time it took to read the data to the console
 	dataRecievingTime = (((end.tv_sec - start.tv_sec) * 1000000L) + (end.tv_usec - start.tv_usec));
