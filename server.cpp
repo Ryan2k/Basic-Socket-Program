@@ -81,7 +81,8 @@ void* genResponse(void* input) {
 	// thus, terminating the file representing the socket and opening up that descriptor
 	close(comThread);
 
-	exit(0); // not sure what to return with void pointer
+	// exit(0); // not sure what to return with void pointer
+	return NULL;
 }
 
 /*
