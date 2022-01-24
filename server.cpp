@@ -56,7 +56,7 @@ void* genResponse(void* input) {
 	// reads in data from the client into the buffer iteration times (same iteration number as client side)
 	for (int i = 0; i < iterations; i++) {
 		cout << "Read Iteration: " << i << endl;
-		for (int nRead = 0; nRead += read(comThread, databuf, BUFSIZE - nRead) < BUFSIZE; count++);
+		for (int nRead = 0; (nRead += read(comThread, databuf, BUFSIZE - nRead)) < BUFSIZE; ++count);
 	}
 
 	// once we are done reading, store the new time of day in the end time
