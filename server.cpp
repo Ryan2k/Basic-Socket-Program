@@ -190,7 +190,7 @@ int main(int argc, char** argv) {
 
 		int clientSocketDescriptor = accept(serverSocket, &clientAddress, &clientAddressLength);
 
-		cout << "recieved request from client address: " << clientAddress->sa_data << endl;
+		cout << "recieved request from client address: " << clientAddress.sa_data << endl;
 
 		if (clientSocketDescriptor == -1) {
 			cout << "Failed to accept client connection request" << endl;
