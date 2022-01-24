@@ -146,6 +146,7 @@ void writeToSocket (int iterations, int nbufs, int bufsize, int type, int socket
 }
 
 int main(int argc, char** argv) {
+    cout << "opened program" << endl;
     char* serverPort = argv[1]; // first argument is the port to the server
 	char* serverName = argv[2]; // servers IP address or host name
 	int iterations = atoi(argv[3]); // number of iterations a client performs on data transmission using one of the three methods
