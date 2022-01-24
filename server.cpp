@@ -71,6 +71,8 @@ void* genResponse(void* input) {
 	// finally, once the reponse is formulated and sent, and we no longer need to the communication link, close the socket
 	// thus, terminating the file representing the socket and opening up that descriptor
 	close(comThread);
+
+	exit(0); // not sure what to return with void pointer
 }
 
 /*
