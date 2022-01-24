@@ -81,7 +81,8 @@ void* genResponse(void* input) {
  * recieve all data sent by the client. So the value should be the same as the
  * clients iteration argument.
  */
-int main(char** argv) {
+int main(int argc, char** argv) {
+	cout << argc << endl;
 	char* port = argv[1]; // 2648 (last four of my student id)
 	int iterations = atoi(argv[2]);
 
