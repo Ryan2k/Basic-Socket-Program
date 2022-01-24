@@ -187,7 +187,7 @@ int main(int argc, char** argv) {
     // 2. start the starttime with the current time of day (i believe this is just linux time)
     gettimeofday(&start, NULL); // sets start tot he current time of day. Second parameter is timezone
 
-    cout << "start time: " << start << endl;
+    cout << "start time: " << start.tv_sec << endl;
 
     // 3. Call the function to write to socket
     // if we have found a successful connection, write the data to the socket
@@ -196,7 +196,7 @@ int main(int argc, char** argv) {
     // 4. When it is done writing, set the value of lap to the current time of day
     gettimeofday(&lap, NULL);
 
-    cout << "time done writing data: " << lap << endl;
+    cout << "time done writing data: " << lap.tv_sec << endl;
 
     // 5. Now read back the information from the server (takes some time)
     int numReads = 0;
@@ -205,7 +205,7 @@ int main(int argc, char** argv) {
     // 6. Now check the time after reading (store as end)
     gettimeofday(&end, NULL);
 
-    cout << "time done reading data back from server: " << endl;
+    cout << "time done reading data back from server: " << end.tv_sec << endl;
 
     // 7. Calculate the transfer time (lap - start) & the total time (end - start)
     transferTime = ((lap.tv_sec - start.tv_sec) * 1000000L) + (lap.tv_usec - start.tv_usec);
