@@ -33,7 +33,7 @@ using namespace std;
  * linked list of addrinfo structures.
  */
 struct addrinfo* getAddressGuesses (char* portNumber, char* ipAddress) {
-    cout << "entered getAddressGuesses!" << endl;
+    //cout << "entered getAddressGuesses!" << endl;
     // give the following hints of the server
     struct addrinfo hints;
     memset(&hints, 0, sizeof(hints));
@@ -65,7 +65,7 @@ struct addrinfo* getAddressGuesses (char* portNumber, char* ipAddress) {
  * If one of them works, returns its descriptor. Head is just the guesses pointer as its the first guess.
  */
 int getSocketDescriptor (struct addrinfo* head) {
-    cout << "entered getSocketDescriptor" << endl;
+    //cout << "entered getSocketDescriptor" << endl;
     struct addrinfo* curr; // the current record in the linked list (will initilize to head)
 
     int sd = -1; // the return value
@@ -75,7 +75,7 @@ int getSocketDescriptor (struct addrinfo* head) {
     int clientSocket;
 
     for (curr = head; curr != NULL; curr = curr->ai_next) {
-        cout << "guess " << guessCount << " address: " << curr->ai_addr << ", socket number: " << socket << endl;
+        //cout << "guess " << guessCount << " address: " << curr->ai_addr << ", socket number: " << socket << endl;
 
         clientSocket = socket(curr->ai_family, curr-> ai_socktype, curr->ai_protocol);
 
@@ -84,10 +84,10 @@ int getSocketDescriptor (struct addrinfo* head) {
             continue;
         }
 
-        cout << "Created socket with descriptor: " << clientSocket << endl;
+        //cout << "Created socket with descriptor: " << clientSocket << endl;
         // if the connection results in a value that isnt -1, break out of this as we have the correct client socket
         if(connect(clientSocket, curr->ai_addr, curr->ai_addrlen) != -1) {
-            cout << "successfully connected on the socket created and returning socket descriptor: " << clientSocket << endl;
+            //cout << "successfully connected on the socket created and returning socket descriptor: " << clientSocket << endl;
             return clientSocket;
         }
 
