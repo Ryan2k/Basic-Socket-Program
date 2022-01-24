@@ -97,13 +97,25 @@ int getSocketDescriptor (struct addrinfo* head) {
             // 3. The length of the address
             int successfulConnection = connect(sd, curr->ai_addr, curr->ai_addrlen);
 
+            bool debuggingSuccess = false; // for debugging, true if connection was successful, false otherwise
+
+            if (successfulConnection != -1) {
+                debuggingSuccess = true;
+            }
+
+            cout << "guess " << guessCount << " successful connection: " << debuggingSuccess << endl;
+
             // if this is not -1, it means it failed and we should move on
             if (successfulConnection != -1) {
+                close(sd);
                 curr = curr->ai_next;
             }
             else {
-                close(sd);
+                break;
             }
+            //else {
+                //close(sd);
+            //}
         }
     }
 
