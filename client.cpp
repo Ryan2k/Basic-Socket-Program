@@ -64,9 +64,12 @@ struct addrinfo* getAddressGuesses (char* portNumber, char* ipAddress) {
  * If one of them works, returns its descriptor. Head is just the guesses pointer as its the first guess.
  */
 int getSocketDescriptor (struct addrinfo* head) {
+    cout << "entered getSocketDescriptor" << endl;
     struct addrinfo* curr = head;
 
     int sd = -1; // the return value
+
+    int guessCount = 1; // for debuggin purposes
 
     while (curr != NULL) {
         // Step 1 - Create the socket to test with the information from the guess (3 parameters)
@@ -78,6 +81,9 @@ int getSocketDescriptor (struct addrinfo* head) {
         // this call is creating that socket and returning the index of that socket in the table
         // this client.cpp program is going to be using this socket
         sd = socket(curr->ai_family, curr->ai_socktype, curr->ai_protocol);
+
+        cout << "guess " << guessCount << " address: " << curr->ai_addr << ", socket number: " << socket << endl;
+        guessCount++;
 
         // if sd is -1, it means it cant connect so try next guess
         if (sd == -1) {
@@ -100,6 +106,8 @@ int getSocketDescriptor (struct addrinfo* head) {
             }
         }
     }
+
+    cout << "sd in getSocketDescriptor: " << sd << endl;
 
     return sd;
 }
