@@ -66,11 +66,43 @@ struct addrinfo* getAddressGuesses (char* portNumber, char* ipAddress) {
  */
 int getSocketDescriptor (struct addrinfo* head) {
     cout << "entered getSocketDescriptor" << endl;
-    struct addrinfo* curr = head;
+    // struct addrinfo* curr = head;
 
     int sd = -1; // the return value
 
     int guessCount = 1; // for debuggin purposes
+
+    int clientSocket;
+
+    for (curr = head; curr != NULL; curr = curr->ai_next) {
+        cout << "guess " << guessCount << " address: " << curr->ai_addr << ", socket number: " << socket << endl;
+
+        clientSocket = socket(curr->ai_family, curr-> ai_socktype, curr->ai_protocol);
+
+        if (clientSocket == -1) {
+            cout << "Couldnt create socket with guess " << guessCount << endl;
+            continue;
+        }
+
+        cout << "Created socket with descriptor: " << clientSocket << endl;
+        // if the connection results in a value that isnt -1, break out of this as we have the correct client socket
+        if(connect(clientSocket, curr->ai_addr, curr->ai_addrlen) != -1) {
+            cout << "successfully connected on the socket created and returning socket descriptor: " << clientSocket << endl;
+            return clientSocket;
+        }
+
+        cout << "Couldnt connect on this guess after successfully creating the socket" << endl;
+
+        // if the connection failed, close the socket we just created since it successfully created one, and move on
+        close(clientSocket);
+
+        guessCount++;
+    }
+
+    cout << "couldnt connect to any of the guesses" << endl;
+    return -1;
+
+    /*
 
     while (curr != NULL) {
         // Step 1 - Create the socket to test with the information from the guess (3 parameters)
@@ -123,10 +155,12 @@ int getSocketDescriptor (struct addrinfo* head) {
             //}
         }
     }
+    
 
     cout << "sd in getSocketDescriptor: " << sd << endl;
 
     return sd;
+    */
 }
 
 /*

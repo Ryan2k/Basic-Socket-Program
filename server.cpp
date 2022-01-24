@@ -190,10 +190,14 @@ int main(int argc, char** argv) {
 
 		int clientSocketDescriptor = accept(serverSocket, &clientAddress, &clientAddressLength);
 
+		cout << "recieved request from client address: " << clientAddress->sa_data << endl;
+
 		if (clientSocketDescriptor == -1) {
 			cout << "Failed to accept client connection request" << endl;
 			exit(EXIT_FAILURE);
 		}
+
+		cout << "created socket for client with descriptor: " << clientSocketDescriptor << endl;
 
 		// if we were successfully able to accept the connection, we should now create a new thread to handle
 		// the communication with the current client with the new socket descriptor just created
