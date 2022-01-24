@@ -215,7 +215,7 @@ int main(int argc, char** argv) {
 		data->socketDescriptor = clientSocketDescriptor;
 		data->numIterations = iterations;
 
-		pthread_create(&comThread, NULL, genResponse, (void*) comThread);
+		pthread_create(&comThread, NULL, genResponse, (void*) data);
 	}
 
 	return 0;
