@@ -81,7 +81,7 @@ void* genResponse(void* input) {
  * recieve all data sent by the client. So the value should be the same as the
  * clients iteration argument.
  */
-int main(int argc, char** argv) {
+int main(char** argv) {
 	char* port = argv[1]; // 2648 (last four of my student id)
 	int iterations = atoi(argv[2]);
 
@@ -198,5 +198,9 @@ int main(int argc, char** argv) {
 		struct communicationThreadData* data = new communicationThreadData;
 		data->socketDescriptor = clientSocketDescriptor;
 		data->numIterations = iterations;
+
+		pthread_create(&comThread, NULL, genResponse, (void*) comThread);
 	}
+
+	return 0;
 }
