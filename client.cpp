@@ -250,7 +250,7 @@ int main(int argc, char** argv) {
     // 2. start the starttime with the current time of day (i believe this is just linux time)
     gettimeofday(&start, NULL); // sets start tot he current time of day. Second parameter is timezone
 
-    cout << "start time: " << start.tv_sec << endl;
+    cout << "start time: " << start.tv_usec << endl;
 
     // 3. Call the function to write to socket
     // if we have found a successful connection, write the data to the socket
@@ -259,7 +259,7 @@ int main(int argc, char** argv) {
     // 4. When it is done writing, set the value of lap to the current time of day
     gettimeofday(&lap, NULL);
 
-    cout << "time done writing data: " << lap.tv_sec << endl;
+    cout << "time done writing data: " << lap.tv_usec << endl;
 
     // 5. Now read back the information from the server (takes some time)
     int numReads = 0;

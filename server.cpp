@@ -184,7 +184,7 @@ int main(int argc, char** argv) {
 	// 3. a pointer to the length of the variable pointed to by the previous argument
 	// returns -1 if cannot accept, and a new file descriptor if it does accept
 
-	while (true) {
+	while (1) {
 		struct sockaddr clientAddress;
 		socklen_t clientAddressLength = sizeof(clientAddress);
 
